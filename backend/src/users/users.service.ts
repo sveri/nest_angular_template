@@ -3,12 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 
-// export interface User {
-//   userId: number;
-//   username: string;
-//   password: string;
-// }
-
 export type UserClean = Omit<User, 'password'>;
 
 @Injectable()
@@ -18,7 +12,7 @@ export class UsersService {
     private readonly userRepository: Repository<User>) {
     userRepository.findOne({ email: 'admin@localhost.de' }).then(u => {
       if (!u) {
-        userRepository.save({ email: 'admin@localhost.de', password: 'john' });
+        userRepository.save(new User('admin@localhost.de', 'john'));
       }
     });
   }
