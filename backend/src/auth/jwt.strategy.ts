@@ -1,4 +1,5 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
+
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { UserClean } from '../users/users.service';
@@ -20,6 +21,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     iat: number;
     exp: number;
   }): Promise<UserClean> {
-    return { userId: payload.sub, username: payload.username };
+    return { id: payload.sub, email: payload.username };
   }
 }

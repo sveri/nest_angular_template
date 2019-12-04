@@ -1,5 +1,6 @@
-import { User, UserClean } from '../users/users.service';
 import { Injectable } from '@nestjs/common';
+import { User } from 'src/users/user.entity';
+import { UserClean } from '../users/users.service';
 
 @Injectable()
 export class ValidationService {

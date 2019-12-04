@@ -1,7 +1,9 @@
 /* eslint-disable jest/expect-expect */
 import * as request from 'supertest';
+
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { AppModule } from './../src/app.module';
 
 describe('AuthController (e2e)', () => {
@@ -21,9 +23,9 @@ describe('AuthController (e2e)', () => {
     superTest = request(app.getHttpServer());
   });
 
-  async function logInAsJohn(): Promise<request.Response> {
+  async function logInAsAdmin(): Promise<request.Response> {
     return await superTest.post(loginUrl).send({
-      username: 'john',
+      username: 'admin@localhost.de',
       password: 'john',
     });
   }
@@ -31,7 +33,7 @@ describe('AuthController (e2e)', () => {
 
   describe(`/POST ${loginUrl}`, () => {
     it('should return an accesstoken on successful login', async () => {
-      const response = await logInAsJohn();
+      const response = await logInAsAdmin();
 
       expect(response.status).toBe(HttpStatus.CREATED);
       expect(typeof response.body.accessToken).toBe('string');
