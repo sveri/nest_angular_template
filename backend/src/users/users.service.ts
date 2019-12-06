@@ -1,3 +1,5 @@
+import * as bcrypt from 'bcryptjs';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
@@ -19,5 +21,16 @@ export class UsersService {
 
   async findOne(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({ email });
+  }
+
+  async registerUser(user: User): Promise<User> {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    // eslint-disable-next-line require-atomic-updates
+    user.password = hashedPassword;
+    return this.userRepository.save(user);
+  }
+
+  async userExists(user: User): Promise<User> {
+    return await this.userRepository.findOne({ email: user.email });
   }
 }
