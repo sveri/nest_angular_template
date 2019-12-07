@@ -40,15 +40,6 @@ describe('UserController (e2e)', () => {
     superTest = request(app.getHttpServer());
   });
 
-  async function logInAsAdmin(): Promise<request.Response> {
-    return await superTest.post(loginUrl).send({
-      username: 'admin@localhost.de',
-      password: 'john',
-    });
-
-  }
-
-
   describe(`/POST ${loginUrl}`, () => {
     it('should register a user that does not exist', async () => {
       const res = await superTest.post(baseUrl + '/register').send({
